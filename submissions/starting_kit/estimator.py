@@ -763,3 +763,52 @@ def get_estimator():
     return estimator
 
 print(get_estimator())
+
+class PrecomputedKernelRBF(BaseEstimator, ClassifierMixin):
+    def __init__(self, C=0.3):
+        self.C = C
+        self.svm = SVC(class_weight="balanced", kernel='precomputed', probability=True, \
+                       C=self.C, random_state=1, gamma='scale')
+        self.X_train_ = None  # Initialize X_train_ attribute
+        self.y_train_ = None  # Initialize y_train_ attribute
+        self.y_val_labels = None  # Initialize y_val_labels attribute
+
+    def fit(self, X, y):
+        # Save the incoming training data X and the corresponding labels y
+        self.X_train_ = X
+        self.y_train_ = y
+        kernel_matrix = rbf_kernel(X, X)
+        self.svm.fit(kernel_matrix, y)
+        self.classes_ = self.svm.classes_
+
+        # Obtain y_val_labels during one CV iteration
+        skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+        for train_index, val_index in skf.split(X, y):
+            self.y_val_labels = y[val_index]
+            break  # Only need one iteration to get y_val_labels
+
+        return self
+
+    def predict(self, X):
+        check_is_fitted(self)
+        # Compute the kernel matrix for the test data
+        kernel_matrix = rbf_kernel(X, self.X_train_)
+        # Train the model on the validation labels obtained during fit()
+        self.svm.fit(kernel_matrix, self.y_val_labels)
+        return self.svm.predict(kernel_matrix)
+
+    def predict_proba(self, X):
+        check_is_fitted(self)
+        # Compute the kernel matrix for the test data
+        kernel_matrix = rbf_kernel(X, self.X_train_)
+        # Train the model on the validation labels obtained during fit()
+        self.svm.fit(kernel_matrix, self.y_val_labels)
+        return self.svm.predict_proba(kernel_matrix)
+
+    def decision_function(self, X):
+        check_is_fitted(self)
+        # Compute the kernel matrix for the test data
+        kernel_matrix = rbf_kernel(X, self.X_train_)
+        # Train the model on the validation labels obtained during fit()
+        self.svm.fit(kernel_matrix, self.y_val_labels)
+        return self.svm.decision_function(kernel_matrix)
