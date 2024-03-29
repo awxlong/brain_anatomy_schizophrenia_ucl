@@ -1,6 +1,6 @@
 # Benchmarking models for predicting schizophrenia using brain anatomy
 
-For a more detailed breakdown of the competition rationale, please visit the [original repository's README file](https://github.com/ramp-kits/brain_anatomy_schizophrenia)
+For a more detailed breakdown of the competition rationale, please visit the [original repository's README file](https://github.com/ramp-kits/brain_anatomy_schizophrenia) or the brain_anatomy_schizophrenia_starting_kit.ipynb notebook
 
 This is our solution submitted to a competition hosted by [RAMP-Studio](https://ramp.studio/problems/brain_anatomy_schizophrenia). The relevant files are:
 
