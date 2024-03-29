@@ -1,0 +1,5 @@
+*.pkl
+*.zip
+data/
+brain_anatomy_schizophrenia_starting_kit.ipynb
+!skopt_edited.zip
