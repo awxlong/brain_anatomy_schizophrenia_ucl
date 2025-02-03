@@ -12,7 +12,7 @@ This is our solution submitted to a competition hosted by [RAMP-Studio](https://
 - log reg is all you need.pdf:
   - a brief presentation sharing my approach which achieved 3rd place before the RAMP-Studio competition deadline achieving a cross-validation score of 0.77 balanced accuracy.
 
-- Schizophrenia classification from brain anatomical data using machine learning.pdf:
+- shizo_bayes.pdf:
   -  a report written in the style of a paper documenting our experiments
  
 - estimator.py:
